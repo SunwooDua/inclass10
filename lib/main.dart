@@ -108,6 +108,10 @@ class MyCustomFormState extends State<MyCustomForm> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Processing Data')),
                   );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Confirmation()),
+                  );
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Failed Processing Data')),
@@ -118,6 +122,20 @@ class MyCustomFormState extends State<MyCustomForm> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class Confirmation extends StatelessWidget {
+  const Confirmation({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Confirmation Page")),
+      body: Column(
+        children: [Container(child: Text("Successful Sign Up! Welcome!"))],
       ),
     );
   }
