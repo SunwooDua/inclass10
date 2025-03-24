@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
       title: appTitle,
       home: Scaffold(
         appBar: AppBar(title: const Text(appTitle)),
-        body: const MyCustomForm(),
+        body: Column(children: [const MyCustomForm()]),
       ),
     );
   }
@@ -35,6 +35,12 @@ class MyCustomFormState extends State<MyCustomForm> {
   // Note: This is a GlobalKey<FormState>,
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
+  // what to ask for signup form
+  final _name = TextEditingController();
+  final _email = TextEditingController();
+  final _DOB = TextEditingController();
+  final _password = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
@@ -44,10 +50,49 @@ class MyCustomFormState extends State<MyCustomForm> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextFormField(
+            //name
+            controller: _name,
+            decoration: InputDecoration(labelText: 'Name'),
             // The validator receives the text that the user has entered.
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter some text';
+                return 'Please enter your name';
+              }
+              return null;
+            },
+          ),
+          TextFormField(
+            // email
+            controller: _email,
+            decoration: InputDecoration(labelText: 'email'),
+            // The validator receives the text that the user has entered.
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your email';
+              }
+              return null;
+            },
+          ),
+          TextFormField(
+            // date of birth
+            controller: _DOB,
+            decoration: InputDecoration(labelText: 'Date of Birth'),
+            // The validator receives the text that the user has entered.
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your DOB';
+              }
+              return null;
+            },
+          ),
+          TextFormField(
+            // password
+            controller: _password,
+            decoration: InputDecoration(labelText: 'password'),
+            // The validator receives the text that the user has entered.
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your password';
               }
               return null;
             },
@@ -62,6 +107,10 @@ class MyCustomFormState extends State<MyCustomForm> {
                   // you'd often call a server or save the information in a database.
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Processing Data')),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Failed Processing Data')),
                   );
                 }
               },
