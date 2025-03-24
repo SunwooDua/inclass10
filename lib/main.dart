@@ -49,54 +49,84 @@ class MyCustomFormState extends State<MyCustomForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextFormField(
-            //name
-            controller: _name,
-            decoration: InputDecoration(labelText: 'Name'),
-            // The validator receives the text that the user has entered.
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter your name';
-              }
-              return null;
-            },
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              //name
+              controller: _name,
+              decoration: InputDecoration(labelText: 'Name'),
+              // The validator receives the text that the user has entered.
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your name';
+                }
+                return null;
+              },
+            ),
           ),
-          TextFormField(
-            // email
-            controller: _email,
-            decoration: InputDecoration(labelText: 'email'),
-            // The validator receives the text that the user has entered.
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter your email';
-              }
-              return null;
-            },
+          SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              // email
+              controller: _email,
+              decoration: InputDecoration(labelText: 'email'),
+              // The validator receives the text that the user has entered.
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your email';
+                } else if (!RegExp(
+                  //reg expression for email format something@something.something
+                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+                ).hasMatch(value)) {
+                  return "Please enter valid email format";
+                }
+                return null;
+              },
+            ),
           ),
-          TextFormField(
-            // date of birth
-            controller: _DOB,
-            decoration: InputDecoration(labelText: 'Date of Birth'),
-            // The validator receives the text that the user has entered.
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter your DOB';
-              }
-              return null;
-            },
+          SizedBox(height: 20),
+
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              // date of birth
+              controller: _DOB,
+              decoration: InputDecoration(labelText: 'Date of Birth'),
+              // The validator receives the text that the user has entered.
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your DOB';
+                }
+                return null;
+              },
+            ),
           ),
-          TextFormField(
-            // password
-            controller: _password,
-            decoration: InputDecoration(labelText: 'password'),
-            // The validator receives the text that the user has entered.
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter your password';
-              }
-              return null;
-            },
+          SizedBox(height: 20),
+
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              // password
+              controller: _password,
+              decoration: InputDecoration(labelText: 'password'),
+              // The validator receives the text that the user has entered.
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your password';
+                } else if (value.length < 8) {
+                  // if less than 8
+                  return 'your password must be longer than 8 character';
+                } else if (!value.contains('!')) {
+                  // if not contain !
+                  return 'your password must contain !';
+                }
+                return null;
+              },
+            ),
           ),
+          SizedBox(height: 20),
+
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
             child: ElevatedButton(
@@ -106,7 +136,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                   // If the form is valid, display a snackbar. In the real world,
                   // you'd often call a server or save the information in a database.
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Processing Data')),
+                    const SnackBar(content: Text('Processing Data Successful')),
                   );
                   Navigator.push(
                     context,
@@ -133,9 +163,20 @@ class Confirmation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Confirmation Page")),
+      appBar: AppBar(
+        title: Text("Confirmation Page"),
+        backgroundColor: Colors.amber,
+      ),
       body: Column(
-        children: [Container(child: Text("Successful Sign Up! Welcome!"))],
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: Text(
+              "Successful Sign Up! \n Welcome!",
+              style: TextStyle(fontSize: 50),
+            ),
+          ),
+        ],
       ),
     );
   }
